@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Gestion Commerciale Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>GestionPro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="shop.html">Boutique</a></li>
+                <li><a href="cart.html">Panier (<span id="cart-count">0</span>)</a></li>
+                <li><a href="account.html">Mon compte</a></li>
+                <li><a href="#" id="logout-link" style="display:none">Déconnexion</a></li>
+                <li><a href="login.html" id="auth-link">Connexion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Bienvenue sur GestionPro</h1>
+            <p>La solution complète pour votre entreprise</p>
+            <a href="shop.html" class="btn-primary">Découvrir nos produits</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="container">
+            <h2>Nos fonctionnalités</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Gestion des ventes</h3>
+                    <p>Suivez toutes vos ventes en temps réel</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Gestion du stock</h3>
+                    <p>Contrôle précis de votre inventaire</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Gestion des employés</h3>
+                    <p>Administrez votre équipe facilement</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Gestion des salaires</h3>
+                    <p>Payez vos employés automatiquement</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section produits populaires -->
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Produits populaires</h2>
+        <div id="featured-products" class="products-grid">
+            <div class="loading">Chargement des produits...</div>
+        </div>
+    </div>
+
+    <!-- Section témoignages -->
+    <div class="features" style="background: #f0f4f8;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Ce que nos clients disent</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⭐⭐⭐⭐⭐</div>
+                    <p>"GestionPro a révolutionné la façon dont nous gérons notre entreprise. Interface intuitive et fonctionnalités complètes!"</p>
+                    <h4>- Marie Dupont</h4>
+                    <small>PDG, TechSolutions</small>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐⭐⭐⭐⭐</div>
+                    <p>"Le suivi des ventes et du stock en temps réel nous a permis d'optimiser nos opérations. Excellent outil!"</p>
+                    <h4>- Jean Martin</h4>
+                    <small>Directeur, CommercePlus</small>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐⭐⭐⭐⭐</div>
+                    <p>"Service client réactif et plateforme stable. Je recommande vivement GestionPro à toutes les PME."</p>
+                    <h4>- Sophie Bernard</h4>
+                    <small>Gérante, ModeExpress</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section newsletter -->
+    <div class="container" style="text-align: center; padding: 3rem;">
+        <h2>Restez informé</h2>
+        <p>Inscrivez-vous à notre newsletter pour recevoir nos offres spéciales</p>
+        <form id="newsletter-form" style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+            <input type="email" id="newsletter-email" placeholder="Votre email" required style="padding: 0.8rem; width: 300px; border: 1px solid #ddd; border-radius: 5px;">
+            <button type="submit" class="btn-primary">S'abonner</button>
+        </form>
+        <div id="newsletter-message"></div>
+    </div>
+
+    <footer>
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+            <div>
+                <h4>GestionPro</h4>
+                <p>La solution complète pour la gestion de votre entreprise</p>
+            </div>
+            <div>
+                <h4>Liens rapides</h4>
+                <ul style="list-style: none;">
+                    <li><a href="index.html" style="color: white; text-decoration: none;">Accueil</a></li>
+                    <li><a href="shop.html" style="color: white; text-decoration: none;">Boutique</a></li>
+                    <li><a href="cart.html" style="color: white; text-decoration: none;">Panier</a></li>
+                    <li><a href="account.html" style="color: white; text-decoration: none;">Mon compte</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>Email: contact@gestionpro.com</p>
+                <p>Tél: +33 1 23 45 67 89</p>
+            </div>
+            <div>
+                <h4>Suivez-nous</h4>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#" style="color: white; text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: white; text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: white; text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;">&copy; 2024 GestionPro - Tous droits réservés</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Charger les produits populaires sur la page d'accueil
+        document.addEventListener('DOMContentLoaded', async () => {
+            const featuredContainer = document.getElementById('featured-products');
+            if (featuredContainer) {
+                try {
+                    const response = await fetch('http://localhost:3000/api/products?sort=name');
+                    if (response.ok) {
+                        const data = await response.json();
+                        const featuredProducts = data.products.slice(0, 4); // Les 4 premiers produits
+                        
+                        if (featuredProducts.length > 0) {
+                            featuredContainer.innerHTML = featuredProducts.map(product => `
+                                <div class="product-card">
+                                    <div class="product-info">
+                                        <h3>${escapeHtml(product.name)}</h3>
+                                        <p>${escapeHtml(product.description || 'Description non disponible')}</p>
+                                        <div class="product-price">${product.price.toFixed(2)} €</div>
+                                        <a href="shop.html" class="btn-primary" style="display: inline-block; margin-top: 1rem;">Voir le produit</a>
+                                    </div>
+                                </div>
+                            `).join('');
+                        } else {
+                            featuredContainer.innerHTML = '<p>Aucun produit disponible</p>';
+                        }
+                    } else {
+                        featuredContainer.innerHTML = '<p>Impossible de charger les produits</p>';
+                    }
+                } catch (error) {
+                    console.error('Erreur lors du chargement des produits:', error);
+                    featuredContainer.innerHTML = '<p>Erreur de chargement des produits</p>';
+                }
+            }
+            
+            // Newsletter subscription
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('newsletter-email').value;
+                    const messageDiv = document.getElementById('newsletter-message');
+                    if (messageDiv) {
+                        messageDiv.innerHTML = '<div class="alert alert-success">Merci pour votre inscription !</div>';
+                        newsletterForm.reset();
+                        setTimeout(() => {
+                            messageDiv.innerHTML = '';
+                        }, 3000);
+                    }
+                });
+            }
+        });
+        
+        // Escape HTML function
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

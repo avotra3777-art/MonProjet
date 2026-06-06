@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier - GestionPro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>GestionPro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="shop.html">Boutique</a></li>
+                <li><a href="cart.html" class="active">Panier (<span id="cart-count">0</span>)</a></li>
+                <li><a href="account.html">Mon compte</a></li>
+                <li><a href="#" id="logout-link">Déconnexion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Mon panier</h1>
+        <div id="cart-container"></div>
+        <div class="cart-summary">
+            <h3>Total: <span id="cart-total">0</span> </h3>
+            <a href="checkout.html" class="btn-primary">Passer commande</a>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

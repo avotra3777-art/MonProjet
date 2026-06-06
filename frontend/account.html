@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon compte - GestionPro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h2>GestionPro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="shop.html">Boutique</a></li>
+                <li><a href="cart.html">Panier (<span id="cart-count">0</span>)</a></li>
+                <li><a href="account.html" class="active">Mon compte</a></li>
+                <li><a href="#" id="logout-link" style="display:none">Déconnexion</a></li>
+                <li><a href="login.html" id="auth-link">Connexion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Mon compte</h1>
+        
+        <div id="account-info" class="account-info"></div>
+        
+        <div class="change-password">
+            <h3>Changer mon mot de passe</h3>
+            <form id="change-password-form">
+                <div class="form-group">
+                    <label for="current-password">Mot de passe actuel</label>
+                    <input type="password" id="current-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">Nouveau mot de passe</label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirmer le mot de passe</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <button type="submit" class="btn-primary">Changer le mot de passe</button>
+            </form>
+            <div id="password-message"></div>
+        </div>
+        
+        <div id="orders-list" class="orders-list">
+            <h3>Mes commandes</h3>
+            <p>Chargement...</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 GestionPro - Tous droits réservés</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

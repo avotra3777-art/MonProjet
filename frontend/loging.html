@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - GestionPro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: #2c3e50;">GestionPro</h2>
+                <p style="color: #7f8c8d;">Connectez-vous à votre compte</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Rôle</label>
+                    <select id="role" name="role">
+                        <option value="user">👤 Utilisateur</option>
+                        <option value="admin">👑 Administrateur</option>
+                        <option value="employee">👔 Employé</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Se connecter</button>
+            </form>
+            
+            <div id="login-message" style="margin-top: 1rem;"></div>
+            
+            <div style="margin-top: 2rem; text-align: center;">
+                <p>Pas encore de compte ? <a href="#" id="register-link" style="color: #3498db; text-decoration: none;">S'inscrire</a></p>
+            </div>
+            
+            <!-- Comptes de démo pour tester -->
+            <div style="margin-top: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 5px;">
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #666;">🔐 Comptes de démo:</p>
+                <div style="font-size: 0.8rem; color: #888;">
+                    <div><strong>Admin:</strong> admin@gestionpro.com / admin123</div>
+                    <div><strong>User:</strong> user@example.com / user123</div>
+                    <div><strong>Employé:</strong> employee@example.com / employee123</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration API
+        const API_URL = 'http://localhost:3000/api';
+
+        // Gestion du formulaire de connexion
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const role = document.getElementById('role').value;
+                
+                // Afficher un message de chargement
+                const submitButton = loginForm.querySelector('button[type="submit"]');
+                const originalButtonText = submitButton.textContent;
+                submitButton.textContent = 'Connexion en cours...';
+                submitButton.disabled = true;
+                
+                try {
+                    const response = await fetch(`${API_URL}/auth/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password, role })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Sauvegarder le token
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Afficher un message de succès
+                        showMessage('Connexion réussie ! Redirection...', 'success');
+                        
+                        // Rediriger vers la page d'accueil après 1 seconde
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    } else {
+                        // Afficher l'erreur
+                        showMessage(data.error || 'Email ou mot de passe incorrect', 'error');
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('Erreur de connexion:', error);
+                    showMessage('Erreur de connexion au serveur. Vérifiez que le backend est démarré.', 'error');
+                    submitButton.textContent = originalButtonText;
+                    submitButton.disabled = false;
+                }
+            });
+        }
+        
+        // Fonction pour afficher les messages
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('login-message');
+            if (messageDiv) {
+                messageDiv.innerHTML = `<div class="alert alert-${type}">${escapeHtml(message)}</div>`;
+                
+                // Faire défiler jusqu'au message
+                messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Effacer le message après 5 secondes
+                setTimeout(() => {
+                    if (messageDiv.innerHTML.includes(message)) {
+                        messageDiv.innerHTML = '';
+                    }
+                }, 5000);
+            }
+        }
+        
+        // Fonction pour échapper le HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Gestion du lien d'inscription
+        const registerLink = document.getElementById('register-link');
+        if (registerLink) {
+            registerLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showRegisterForm();
+            });
+        }
+        
+        // Afficher le formulaire d'inscription
+        function showRegisterForm() {
+            const authBox = document.querySelector('.auth-box');
+            if (!authBox) return;
+            
+            authBox.innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2 style="color: #2c3e50;">Inscription</h2>
+                    <p style="color: #7f8c8d;">Créez votre compte GestionPro</p>
+                </div>
+                
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" placeholder="Jean Dupont" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" placeholder="Au moins 6 caractères" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Confirmer le mot de passe</label>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmez votre mot de passe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Rôle</label>
+                        <select id="role" name="role">
+                            <option value="user">👤 Utilisateur</option>
+                            <option value="employee">👔 Employé</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">S'inscrire</button>
+                </form>
+                
+                <div id="register-message" style="margin-top: 1rem;"></div>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <p>Déjà un compte ? <a href="#" id="login-link" style="color: #3498db; text-decoration: none;">Se connecter</a></p>
+                </div>
+            `;
+            
+            // Gérer l'inscription
+            const registerForm = document.getElementById('register-form');
+            if (registerForm) {
+                registerForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirm_password').value;
+                    const role = document.getElementById('role').value;
+                    
+                    // Vérifier que les mots de passe correspondent
+                    if (password !== confirmPassword) {
+                        showRegisterMessage('Les mots de passe ne correspondent pas', 'error');
+                        return;
+                    }
+                    
+                    // Vérifier la longueur du mot de passe
+                    if (password.length < 6) {
+                        showRegisterMessage('Le mot de passe doit contenir au moins 6 caractères', 'error');
+                        return;
+                    }
+                    
+                    const submitButton = registerForm.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.textContent = 'Inscription en cours...';
+                    submitButton.disabled = true;
+                    
+                    try {
+                        const response = await fetch(`${API_URL}/auth/register`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ name, email, password, role })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (response.ok) {
+                            showRegisterMessage('Inscription réussie ! Redirection vers la connexion...', 'success');
+                            
+                            // Rediriger vers le formulaire de connexion après 2 secondes
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                        } else {
+                            showRegisterMessage(data.error || 'Erreur lors de l\'inscription', 'error');
+                            submitButton.textContent = originalButtonText;
+                            submitButton.disabled = false;
+                        }
+                    } catch (error) {
+                        console.error('Erreur d\'inscription:', error);
+                        showRegisterMessage('Erreur de connexion au serveur', 'error');
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
+                });
+            }
+            
+            // Gérer le retour à la connexion
+            const loginLink = document.getElementById('login-link');
+            if (loginLink) {
+                loginLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.reload();
+                });
+            }
+        }
+        
+        // Fonction pour afficher les messages d'inscription
+        function showRegisterMessage(message, type) {
+            const messageDiv = document.getElementById('register-message');
+            if (messageDiv) {
+                messageDiv.innerHTML = `<div class="alert alert-${type}">${escapeHtml(message)}</div>`;
+                
+                setTimeout(() => {
+                    if (messageDiv.innerHTML.includes(message)) {
+                        messageDiv.innerHTML = '';
+                    }
+                }, 5000);
+            }
+        }
+        
+        // Vérifier si l'utilisateur est déjà connecté
+        const token = localStorage.getItem('token');
+        if (token && window.location.pathname.includes('login.html')) {
+            // Rediriger vers l'accueil si déjà connecté
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
